@@ -83,6 +83,7 @@
 		<Copy SourceFiles="Resources\ImGui.NET.dll" DestinationFolder="bin\UserLibs" />
 		<Copy SourceFiles="Resources\SharpGUI.dll" DestinationFolder="bin\UserLibs" />
 		<Delete Files="bin\Mods\*.pdb;bin\Mods\*.deps.json" />
+		<Exec Command="powershell -NoProfile -ExecutionPolicy Bypass -Command &quot;Compress-Archive -Path 'bin\UserLibs','bin\Mods' -DestinationPath 'bin\PaintTheTownRedMenu.zip' -Force&quot;" />
 	</Target>
 
 </Project>

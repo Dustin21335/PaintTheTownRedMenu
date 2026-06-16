@@ -1,41 +1,12 @@
 # Paint The Town Red Menu
 <sup>A Paint The Town Red Cheat By [Dustin](https://github.com/Dustin21335) | [Discord Server](https://discord.gg/D6wuXEnfhP)</sup>
 
-#### Screenshots
-<p>
-  <img src="https://i.imgur.com/711cIoh.png" width="802" height="604" />
-  <img src="https://i.imgur.com/ZfWy4jO.png" width="802" height="601" />
-</p>
+## Getting Started
 
-## Issue Tracking
+- [How to Install the Cheat](https://github.com/Dustin21335/PaintTheTownRedMenu/wiki/How-to-Install-the-Cheat)
+- [How to Compile the Project](https://github.com/Dustin21335/PaintTheTownRedMenu/wiki/How-to-Compile-the-Project)
 
-### Bug Reporting
-
-If you encounter any issues or bugs while using this cheat, please follow the guidelines below to report them. Your feedback is valuable in improving the cheat and providing a better experience for users.
-
-#### How to Report a Bug
-
-1. **Check Existing Issues:** Before submitting a new bug report, please check the [existing issues](https://github.com/Dustin21335/PaintTheTownRedMenu/labels/bug) to see if the problem has already been reported.
-2. **Create a New Issue:** If the issue hasn't been reported, [create a new issue](https://github.com/Dustin21335/PaintTheTownRedMenu/issues/new?assignees=Dustin21335&labels=bug&projects=&template=bug_report.md&title=%5BBUG%5D) on the GitHub repository. Use the "Bug Report" template provided to ensure you include relevant information.
-
-### New Feature Request
-
-If you have a feature or enhancement you'd like to see added to this project, feel free to request it using the guidelines below. Your suggestions are important for the ongoing development and improvement of this project.
-
-#### How to Request a Feature
-
-1. **Check Existing Requests:** Before submitting a new feature request, please check the [existing requests](https://github.com/Dustin21335/PaintTheTownRedMenu/labels/enhancement) to see if the feature has already been suggested.
-2. **Create a New Request:** If the feature hasn't been requested, [create a new feature request](https://github.com/Dustin21335/PaintTheTownRedMenu/issues/new?assignees=Dustin21335&labels=enhancement&projects=&template=feature-request.md&title=%5BFeature%5D) on the GitHub repository. Use the "Feature Request" template provided to ensure you include relevant information.
-
-### Issue Guidelines
-- **One Issue per Report:** Please report only one bug or request per issue to ensure clarity and easier tracking.
-- **Search for Duplicates:** Before creating a new issue, make sure it hasn't been reported or requested by someone else. If it has, add any additional information or thoughts you have.
-- **Realistic and Feasible:** Consider the feasibility and relevance of your report or request. While creative ideas are welcome, realistic and practical suggestions are more likely to be implemented.
-- **Be Constructive:** Provide constructive input and reasoning for your bug report or feature request to help understand its value and potential impact.
-
-Thank you for contributing to the development of this cheat by sharing your feedback and contributions!
-
-### Default Keybinds
+## Default Keybinds
 
 | Action           | Keybind                                | Description                                      |
 | ---------------- | -------------------------------------- | ------------------------------------------------ |
@@ -44,6 +15,30 @@ Thank you for contributing to the development of this cheat by sharing your feed
 | Toggle NoClip    | <kbd>Delete</kbd>                      | Enables or disables NoClip mode.                 |
 | NoClip Controls  | <kbd>W</kbd> <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd> | Controls while NoClip is enabled. |
 
-## Credit
-  - [ImGui.NET](https://github.com/ImGuiNET/ImGui.NET) - ImGui .NET wrapper 
-  - [SharpGUI](https://github.com/CodeName-Anti/SharpGUI.git) - ImGui rendering and hooking framework
+## Issue Tracking
+
+### Bug Reporting
+
+If you encounter any bugs, please check [existing issues](https://github.com/Dustin21335/PaintTheTownRedMenu/labels/bug) first, then [create a new bug report](https://github.com/Dustin21335/PaintTheTownRedMenu/issues/new?assignees=Dustin21335&labels=bug&template=bug_report.md&title=%5BBUG%5D) if needed. Use the provided template to ensure you include relevant information.
+
+### Feature Requests
+
+If you have a feature or enhancement in mind, please check [existing requests](https://github.com/Dustin21335/PaintTheTownRedMenu/labels/enhancement) first, then [submit a feature request](https://github.com/Dustin21335/PaintTheTownRedMenu/issues/new?assignees=Dustin21335&labels=enhancement&template=feature_request.md&title=%5BFeature%5D) if it hasn't been suggested. Use the provided template to ensure you include relevant information.
+
+### Guidelines
+
+- **One Issue per Report:** Report only one bug or request per issue for clarity and easier tracking.
+- **Search for Duplicates:** Before creating a new issue, ensure it hasn't already been reported or requested.
+- **Be Realistic:** Consider the feasibility and relevance of your report or request.
+- **Be Constructive:** Provide clear reasoning to help understand the value and potential impact.
+
+## Screenshots
+<p>
+  <img src="https://i.imgur.com/711cIoh.png" width="802" height="604" />
+  <img src="https://i.imgur.com/ZfWy4jO.png" width="802" height="601" />
+</p>
+
+## Credits
+
+- [ImGui.NET](https://github.com/ImGuiNET/ImGui.NET) - ImGui .NET wrapper 
+- [SharpGUI](https://github.com/CodeName-Anti/SharpGUI) - ImGui rendering and hooking framework

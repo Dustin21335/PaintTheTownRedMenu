@@ -480,5 +480,5 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
-/PaintTheTownRedMenu/Resources/MelonLoader
-/PaintTheTownRedMenu/Resources/BaseGame
+/PaintTheTownRedMenu/Resources/MelonLoader/*.dll
+/PaintTheTownRedMenu/Resources/BaseGame/*.dll

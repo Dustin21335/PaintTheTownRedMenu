@@ -482,5 +482,6 @@ $RECYCLE.BIN/
 *.swp
 *.db
 *.xml
+*.json
 /PaintTheTownRedMenu/Resources/MelonLoader/*.dll
 /PaintTheTownRedMenu/Resources/BaseGame/*.dll

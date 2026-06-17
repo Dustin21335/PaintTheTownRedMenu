@@ -5,6 +5,7 @@
 
 - [How to Install the Cheat](https://github.com/Dustin21335/PaintTheTownRedMenu/wiki/How-to-Install-the-Cheat)
 - [How to Compile the Project](https://github.com/Dustin21335/PaintTheTownRedMenu/wiki/How-to-Compile-the-Project)
+- [How to Contribute to the Project](https://github.com/Dustin21335/PaintTheTownRedMenu/wiki/How-to-Contribute-to-the-Project)
 
 ## Default Keybinds
 

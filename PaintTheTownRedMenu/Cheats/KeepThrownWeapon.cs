@@ -9,7 +9,7 @@ using UnityEngine;
 namespace PaintTheTownRedMenu.Cheats
 {
     [HarmonyPatch]
-    public class KeepThrownWeapon : ToggleCheat
+    public class KeepThrownWeapon() : ToggleCheat("Keep Thrown Weapon")
     {
         public class Settings
         {
@@ -22,11 +22,6 @@ namespace PaintTheTownRedMenu.Cheats
 
         private Weapon? _lastThrownWeapon;
         private object? _timeoutRoutine;
-
-        public override string GetName()
-        {
-            return "Keep Thrown Weapon";
-        }
 
         public override void OnDisable()
         {

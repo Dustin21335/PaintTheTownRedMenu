@@ -1,4 +1,5 @@
-﻿using Il2Cpp;
+﻿using System.Linq;
+using Il2Cpp;
 using MelonLoader;
 using PaintTheTownRedMenu.Menu.Core;
 using PaintTheTownRedMenu.Utils;

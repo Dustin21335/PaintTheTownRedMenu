@@ -14,29 +14,74 @@ namespace PaintTheTownRedMenu.Utils
             if (position.HasValue) ImGui.SetNextWindowPos(position.Value.ToNumerics(), cond);
             if (size.HasValue) ImGui.SetNextWindowSize(size.Value.ToNumerics(), cond);
             if (!ImGui.Begin(name, windowFlags)) return;
-            action.Invoke();
-            ImGui.End();
+            try
+            {
+                action.Invoke();
+            }
+            finally
+            {
+                ImGui.End();
+            }
         }
 
         public static void ChildArea(string name, Action action, Vector2? size = null, ImGuiChildFlags childFlags = ImGuiChildFlags.None, ImGuiWindowFlags windowFlags = ImGuiWindowFlags.None)
         {
-            if (!ImGui.BeginChild(name, size?.ToNumerics() ?? Vector2.zero.ToNumerics(), childFlags, windowFlags)) return;
-            action.Invoke();
-            ImGui.EndChild();
+           if (!ImGui.BeginChild(name, size?.ToNumerics() ?? Vector2.zero.ToNumerics(), childFlags, windowFlags)) return;
+            try
+            {
+                action.Invoke();
+            }
+            finally
+            {
+                ImGui.EndChild();
+            }
         }
 
         public static void TabBar(string id, Action action)
         {
             if (!ImGui.BeginTabBar(id)) return;
-            action.Invoke();
-            ImGui.EndTabBar();
+            try
+            { 
+                action.Invoke();
+            }
+            finally
+            {
+                ImGui.EndTabBar();
+            }
         }
 
         public static void TabBarItem(string name, Action action)
         {
             if (!ImGui.BeginTabItem(name)) return;
+            try
+            { 
+                action.Invoke();
+            }
+            finally
+            {
+                ImGui.EndTabItem();
+            }
+        }
+
+        public static void Table(string id, Action action, ImGuiTableFlags tableFlags = ImGuiTableFlags.None, ImGuiTableColumnFlags tableColumnFlags = ImGuiTableColumnFlags.None, Vector2? outerSize = null, params string[] columns)
+        {
+            if (!ImGui.BeginTable(id, columns.Length, tableFlags, outerSize?.ToNumerics() ?? default)) return;
+            try
+            {
+                foreach (string column in columns) ImGui.TableSetupColumn(column, tableColumnFlags);
+                ImGui.TableHeadersRow();
+                action.Invoke();
+            }
+            finally
+            {
+                ImGui.EndTable();
+            }
+        }
+
+        public static void Column(Action action)
+        {
+            ImGui.TableNextColumn();
             action.Invoke();
-            ImGui.EndTabItem();
         }
 
         public static void Indent(Action action)
@@ -56,14 +101,14 @@ namespace PaintTheTownRedMenu.Utils
         public static void ID(Cheat? cheat, Action action)
         {
             if (cheat == null) throw new ArgumentNullException(nameof(cheat));
-            ID(cheat.GetName(), action);
+            ID(cheat.Name, action);
         }
 
         public static bool Checkbox(ToggleCheat? toggleCheat)
         {
             if (toggleCheat == null) throw new ArgumentNullException(nameof(toggleCheat));
             bool enabled = toggleCheat.Enabled;
-            bool changed = Checkbox(toggleCheat.GetName(), ref enabled);
+            bool changed = Checkbox(toggleCheat.Name, ref enabled);
             toggleCheat.Enabled = enabled;
             return changed;
         }
@@ -94,14 +139,20 @@ namespace PaintTheTownRedMenu.Utils
             return ImGui.InputText(label, ref value, maxLength);
         }
 
-        public static void SameLine()
+        public static void SameLine(float? offset = null)
         {
-            ImGui.SameLine();
+            if (offset.HasValue) ImGui.SameLine(offset.Value);
+            else ImGui.SameLine();
         }
 
         public static void Separator()
         {
             ImGui.Separator();
+        }
+
+        public static void Dummy(Vector2 size)
+        {
+            ImGui.Dummy(size.ToNumerics());
         }
 
         public static void ColorPickerButton(string name, ref Color color)
@@ -129,7 +180,7 @@ namespace PaintTheTownRedMenu.Utils
         public static void Button(ExecutableCheat? executableCheat)
         {
             if (executableCheat == null) throw new ArgumentNullException(nameof(executableCheat));
-            Button(executableCheat.GetName(), executableCheat.Execute);
+            Button(executableCheat.Name, executableCheat.Execute);
         }
 
         public static bool Button(string name, Color? color = null)
@@ -157,6 +208,11 @@ namespace PaintTheTownRedMenu.Utils
         public static void SetItemDefaultFocus()
         {
             ImGui.SetItemDefaultFocus();
+        }        
+        
+        public static void AlignTextToFramePadding()
+        {
+            ImGui.AlignTextToFramePadding();
         }
 
         public static bool Dropdown<T>(string name, IReadOnlyList<T> items, ref int selectedIndex, Func<T, string>? display = null)
@@ -210,11 +266,11 @@ namespace PaintTheTownRedMenu.Utils
 
         public static bool KeyPicker(string name, ref KeyCode keybind, ref bool waitingForKeybind)
         {
-            ImGuiIOPtr io = ImGui.GetIO();
+            ImGuiIOPtr imguiIO = ImGui.GetIO();
             bool active = _keyPicker == name;
             bool changed = false;
             waitingForKeybind = active;
-            ImGui.AlignTextToFramePadding(); 
+            AlignTextToFramePadding(); 
             Text(name);
             SameLine();
             ImGui.PushID(name);
@@ -235,12 +291,12 @@ namespace PaintTheTownRedMenu.Utils
             if (!active) return changed;
             if (!_previousWantCaptureKeyboard)
             {
-                _previousWantCaptureKeyboard = io.WantCaptureKeyboard;
-                _previousWantCaptureMouse = io.WantCaptureMouse;
-                _previousWantTextInput = io.WantTextInput;
-                io.WantCaptureKeyboard = true;
-                io.WantCaptureMouse = true;
-                io.WantTextInput = true;
+                _previousWantCaptureKeyboard = imguiIO.WantCaptureKeyboard;
+                _previousWantCaptureMouse = imguiIO.WantCaptureMouse;
+                _previousWantTextInput = imguiIO.WantTextInput;
+                imguiIO.WantCaptureKeyboard = true;
+                imguiIO.WantCaptureMouse = true;
+                imguiIO.WantTextInput = true;
             }
             if (IsKeyPressed(ImGuiKey.Escape)) _keyPicker = null;
             else
@@ -257,9 +313,9 @@ namespace PaintTheTownRedMenu.Utils
                 }
             }
             if (_keyPicker != null || !_previousWantCaptureKeyboard) return changed;
-            io.WantCaptureKeyboard = _previousWantCaptureKeyboard;
-            io.WantCaptureMouse = _previousWantCaptureMouse;
-            io.WantTextInput = _previousWantTextInput;
+            imguiIO.WantCaptureKeyboard = _previousWantCaptureKeyboard;
+            imguiIO.WantCaptureMouse = _previousWantCaptureMouse;
+            imguiIO.WantTextInput = _previousWantTextInput;
             _previousWantCaptureKeyboard = false;
             _previousWantCaptureMouse = false;
             _previousWantTextInput = false;
@@ -271,7 +327,7 @@ namespace PaintTheTownRedMenu.Utils
         {
             KeyCode keybind = cheat.Keybind;
             bool waitingForKeybind = cheat.WaitingForKeybind;
-            bool changed = KeyPicker(cheat.GetName(), ref keybind, ref waitingForKeybind);
+            bool changed = KeyPicker(cheat.Name, ref keybind, ref waitingForKeybind);
             cheat.Keybind = keybind;
             cheat.WaitingForKeybind = waitingForKeybind;
             return changed;

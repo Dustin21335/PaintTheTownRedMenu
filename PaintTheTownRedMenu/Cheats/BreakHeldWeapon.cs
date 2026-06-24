@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace PaintTheTownRedMenu.Cheats
 {
-    public class BreakHeldWeapon : ExecutableCheat
+    public class BreakHeldWeapon() : ExecutableCheat("Break Held Weapon")
     {
         public class Settings
         {
@@ -11,11 +11,6 @@ namespace PaintTheTownRedMenu.Cheats
         }
 
         public Settings BreakHeldWeaponSettings = new();
-
-        public override string GetName()
-        {
-            return "Break Held Weapon";
-        }
 
         public override void Execute()
         {

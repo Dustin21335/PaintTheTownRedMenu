@@ -13,7 +13,43 @@ namespace PaintTheTownRedMenu.Menu
             UIUtil.Checkbox(Cheat.Instance<EnemiesIgnoreYou>());
             UIUtil.Checkbox(Cheat.Instance<NoClip>());
             UIUtil.Checkbox(Cheat.Instance<UnbreakableWeapons>());
-            UIUtil.Separator();
+            UIUtil.Checkbox(Cheat.Instance<NoStrongKickCooldown>());
+            UIUtil.Checkbox(Cheat.Instance<DisableEnemyCombatTriggerZones>());
+            DisableEnemyCombat? disableEnemyCombat = Cheat.Instance<DisableEnemyCombat>();
+            UIUtil.Checkbox(disableEnemyCombat);
+            DisableEnemyCombat.Settings? disableEnemyCombatSettings = disableEnemyCombat?.DisableEnemyCombatSettings;
+            if (disableEnemyCombatSettings != null)
+            {
+                UIUtil.Indent(() => UIUtil.ID(disableEnemyCombat, () => UIUtil.Slider("Enemies Per Frame", ref disableEnemyCombatSettings.EnemiesPerFrame, 1, 50)));
+            }
+            SetHealth? setHealth = Cheat.Instance<SetHealth>();
+            UIUtil.Button(setHealth);
+            SetHealth.Settings? setHealthSettings = setHealth?.SetHealthSettings;
+            if (setHealthSettings != null)
+            {
+                UIUtil.Indent(() =>
+                {
+                    UIUtil.ID(setHealth, () =>
+                    {
+                        UIUtil.Text($"Health: {(GameObjectManager.LocalPlayer?.health ?? 0f) * 100f:F0}");
+                        UIUtil.Slider("Health", ref setHealthSettings.Health, 1, 100);
+                    });
+                });
+            }         
+            SetSpeedBoost? setSpeedBoost = Cheat.Instance<SetSpeedBoost>();
+            UIUtil.Button(setSpeedBoost);
+            SetSpeedBoost.Settings? setSpeedBoostSettings = setSpeedBoost?.SetSpeedBoostSettings;
+            if (setSpeedBoostSettings != null)
+            {
+                UIUtil.Indent(() =>
+                {
+                    UIUtil.ID(setSpeedBoost, () =>
+                    {
+                        UIUtil.Text($"Speed Boost: {GameObjectManager.LocalPlayer?.speedBoost ?? 0f}");
+                        UIUtil.Slider("Speed Boost", ref setSpeedBoostSettings.SpeedBoost, 0, 25);
+                    });
+                });
+            }
             UnlimitedAmmo? unlimitedAmmo = Cheat.Instance<UnlimitedAmmo>();
             UIUtil.Checkbox(unlimitedAmmo);
             UnlimitedAmmo.Settings? unlimitedAmmoSettings = unlimitedAmmo?.UnlimitedAmmoSettings;
@@ -21,7 +57,6 @@ namespace PaintTheTownRedMenu.Menu
             {
                 UIUtil.Indent(() => UIUtil.ID(unlimitedAmmo, () => UIUtil.Checkbox("Cannons", ref unlimitedAmmoSettings.Cannons)));
             }
-            UIUtil.Separator();
             GrabRandomWeapon? grabRandomWeapon = Cheat.Instance<GrabRandomWeapon>();
             UIUtil.Button(grabRandomWeapon);
             GrabRandomWeapon.Settings? grabRandomWeaponSettings = grabRandomWeapon?.GrabRandomWeaponSettings;
@@ -34,11 +69,10 @@ namespace PaintTheTownRedMenu.Menu
                         UIUtil.Checkbox("Gun", ref grabRandomWeaponSettings.Gun);
                         UIUtil.Checkbox("Melee", ref grabRandomWeaponSettings.Melee);
                         UIUtil.Checkbox("Shield", ref grabRandomWeaponSettings.Shield);
-                        UIUtil.Checkbox("Steal Held Weapons", ref grabRandomWeaponSettings.StealHeldWeapons);
+                        UIUtil.Checkbox("Allow Held Weapons", ref grabRandomWeaponSettings.AllowHeldWeapons);
                     });
                 });
             }
-            UIUtil.Separator();
             BreakHeldWeapon? breakHeldWeapon = Cheat.Instance<BreakHeldWeapon>();
             UIUtil.Button(breakHeldWeapon);
             BreakHeldWeapon.Settings? breakHeldWeaponSettings = breakHeldWeapon?.BreakHeldWeaponSettings;
@@ -46,7 +80,6 @@ namespace PaintTheTownRedMenu.Menu
             {
                 UIUtil.ID(breakHeldWeapon, () => UIUtil.Indent(() => UIUtil.Checkbox("Ignore Stick In Child", ref breakHeldWeaponSettings.IgnoreStickInChild)));
             }
-            UIUtil.Separator();
             HitActions? hitActions = Cheat.Instance<HitActions>();
             UIUtil.Checkbox(hitActions);
             HitActions.Settings? hitActionSettings = hitActions?.HitActionSettings;
@@ -73,7 +106,6 @@ namespace PaintTheTownRedMenu.Menu
                     });
                 });
             }
-            UIUtil.Separator();
             UnlockAllPowers? unlockAllPowers = Cheat.Instance<UnlockAllPowers>();
             UIUtil.Checkbox(unlockAllPowers);
             UnlockAllPowers.Settings? unlockAllPowersSettings = unlockAllPowers?.UnlockAllPowersSettings;
@@ -89,7 +121,6 @@ namespace PaintTheTownRedMenu.Menu
                     });
                 });
             }
-            UIUtil.Separator();
             SetEnchant? setEnchant = Cheat.Instance<SetEnchant>();
             UIUtil.Button(setEnchant);
             SetEnchant.Settings? setEnchantSettings = setEnchant?.SetEnchantSettings;
@@ -105,7 +136,6 @@ namespace PaintTheTownRedMenu.Menu
                     }); 
                 });
             }
-            UIUtil.Separator();
             AlwaysEnchanted? alwaysEnchanted = Cheat.Instance<AlwaysEnchanted>();
             UIUtil.Checkbox(alwaysEnchanted);
             AlwaysEnchanted.Settings? alwaysEnchantedSettings = alwaysEnchanted?.AlwaysEnchantedSettings;
@@ -120,7 +150,6 @@ namespace PaintTheTownRedMenu.Menu
                     });
                 });
             }
-            UIUtil.Separator();
             KeepThrownWeapon? keepThrownWeapon = Cheat.Instance<KeepThrownWeapon>(); 
             UIUtil.Checkbox(keepThrownWeapon);
             KeepThrownWeapon.Settings? keepThrownWeaponSettings = keepThrownWeapon?.KeepThrownWeaponSettings;
@@ -133,7 +162,6 @@ namespace PaintTheTownRedMenu.Menu
                     UIUtil.Slider("Throw Timeout", ref keepThrownWeaponSettings.ThrowTimeout, 0.5f, 10f);
                 });
             }
-            UIUtil.Separator();
             Aura? aura = Cheat.Instance<Aura>();
             UIUtil.Checkbox(aura);
             Aura.Settings? auraSettings = aura?.AuraSettings;
@@ -164,7 +192,6 @@ namespace PaintTheTownRedMenu.Menu
                     });
                 });
             }
-            UIUtil.Separator();
             ClickAction? clickAction = Cheat.Instance<ClickAction>();
             UIUtil.Checkbox(clickAction);
             ClickAction.Settings? clickActionSettings = clickAction?.ClickActionSettings;

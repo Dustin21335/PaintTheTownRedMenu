@@ -6,7 +6,7 @@ using PaintTheTownRedMenu.Cheats.Core;
 namespace PaintTheTownRedMenu.Cheats
 {
     [HarmonyPatch]
-    public class UnlimitedAmmo : ToggleCheat
+    public class UnlimitedAmmo() : ToggleCheat("Unlimited Ammo")
     {
         public class Settings
         {
@@ -14,11 +14,6 @@ namespace PaintTheTownRedMenu.Cheats
         }
 
         public Settings UnlimitedAmmoSettings = new();
-
-        public override string GetName()
-        {
-            return "Unlimited Ammo";
-        }
 
         public override void OnStateChanged(bool state)
         {

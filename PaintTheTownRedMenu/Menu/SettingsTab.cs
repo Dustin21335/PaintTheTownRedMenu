@@ -18,13 +18,13 @@ namespace PaintTheTownRedMenu.Menu
             UIUtil.Button("Open Settings", Settings.OpenSettings);
             UIUtil.Separator();
             ToggleMenu? toggleMenu = Cheat.Instance<ToggleMenu>();
-            if (toggleMenu != null) UIUtil.ColorPickerButton("Menu Text Color", ref toggleMenu.ToggleMenuSettings.MenuTextColor);
+            if (toggleMenu != null) UIUtil.ColorPickerButton("Menu Watermark Color", ref toggleMenu.ToggleMenuSettings.MenuWatermarkColor);
             UIUtil.Checkbox(Cheat.Instance<FPSCounter>());
             UIUtil.Checkbox(Cheat.Instance<DebugMode>());
             UIUtil.Separator();
             UIUtil.Text("Keybinds");
             UIUtil.Input("Search", ref _search, 64);
-            foreach (Cheat cheat in PaintTheTownRedMenuMod.Instance.Cheats.Where(c => !c.Hidden && (string.IsNullOrEmpty(_search) || c.GetName().ToLower().Contains(_search.ToLower())))) UIUtil.KeyPicker(cheat);
+            foreach (Cheat cheat in PaintTheTownRedMenuMod.Instance.Cheats.Where(c => !c.Hidden && (string.IsNullOrEmpty(_search) || c.Name.ToLower().Contains(_search.ToLower())))) UIUtil.KeyPicker(cheat);
         }
     }
 }

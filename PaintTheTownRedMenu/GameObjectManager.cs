@@ -9,26 +9,11 @@ namespace PaintTheTownRedMenu
     [HarmonyPatch]
     public static class GameObjectManager
     {
-        public static PTTRPlayer? LocalPlayer { get; private set; }
+        public static PTTRPlayer? LocalPlayer => CharacterManager.player;
         public static List<Enemy> Enemies { get; } = [];
         public static List<Weapon> Weapons { get; } = [];
         public static List<WorldButton> WorldButtons { get; } = [];
         public static List<Cannon> Cannons { get; } = [];
-
-
-        [HarmonyPatch(typeof(PTTRPlayer), nameof(PTTRPlayer.Awake)), HarmonyPostfix]
-        private static void PTTRPlayer_Awake(PTTRPlayer __instance)
-        {
-            if (__instance == null) return;
-            LocalPlayer = __instance;
-        }
-
-
-        [HarmonyPatch(typeof(PTTRPlayer), nameof(PTTRPlayer.OnDestroy)), HarmonyPostfix]
-        private static void PTTRPlayer_OnDestroy()
-        {
-            LocalPlayer = null;
-        }
 
         [HarmonyPatch(typeof(Enemy), nameof(Enemy.Start)), HarmonyPostfix]
         private static void Enemy_Start(Enemy __instance)

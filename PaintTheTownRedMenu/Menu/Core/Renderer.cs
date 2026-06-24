@@ -19,6 +19,7 @@ namespace PaintTheTownRedMenu.Menu.Core
             Tabs.Add(new VisualTab());
             Tabs.Add(new MiscTab());
             Tabs.Add(new EnemyTab());
+            Tabs.Add(new WeaponTab());
             Tabs.Add(new SettingsTab());
             Tabs.Add(new DebugTab());
             GUI.Initialize();
@@ -49,7 +50,7 @@ namespace PaintTheTownRedMenu.Menu.Core
             {
                 Position = new Vector2(5f, 5f),
                 Text = $"Paint The Town Red Menu {PaintTheTownRedMenuMod.Instance.Info.Version}{(fpsCounter is { Enabled: true } ? $" | FPS {fpsCounter.FPS}" : "")} | Menu Toggle {toggleMenu?.Keybind}",
-                TextColor = toggleMenu?.ToggleMenuSettings.MenuTextColor ?? new Color(0.30f, 0.62f, 1.00f, 1.00f),
+                TextColor = toggleMenu?.ToggleMenuSettings.MenuWatermarkColor ?? new Color(0.30f, 0.62f, 1.00f, 1.00f),
                 Outline = true,
                 OutlineColor = Color.black,
                 OutlineThickness = 1
@@ -73,9 +74,9 @@ namespace PaintTheTownRedMenu.Menu.Core
             {
                 UIUtil.Area("Paint The Town Red Menu", () =>
                 {
-                    UIUtil.ChildArea("TabBar", () =>
+                    UIUtil.ChildArea("Tabs", () =>
                     {
-                        UIUtil.TabBar("PaintTheTownRedMenuTabBar", () =>
+                        UIUtil.TabBar("TabBar", () =>
                         {
                             for (int index = 0; index < Tabs.Count; index++)
                             {

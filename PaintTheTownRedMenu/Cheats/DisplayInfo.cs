@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace PaintTheTownRedMenu.Cheats
 {
-    public class DisplayInfo : ToggleCheat
+    public class DisplayInfo() : ToggleCheat("Display Info")
     {
         public class Settings
         {
@@ -16,11 +16,6 @@ namespace PaintTheTownRedMenu.Cheats
         }
 
         public Settings DisplayInfoSettings = new();
-
-        public override string GetName()
-        {
-            return "Display Info";
-        }
 
         public override void OnGUI()
         {

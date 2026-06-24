@@ -4,14 +4,13 @@ using UnityEngine;
 
 namespace PaintTheTownRedMenu.Cheats.Core
 {
-    public abstract class Cheat(KeyCode keybind, bool hidden)
+    public abstract class Cheat(string name, KeyCode keybind, bool hidden)
     {
+        public string Name { get; } = name;
         public KeyCode Keybind { get; set; } = keybind;
         public bool Hidden { get; } = hidden;
         public bool HasKeybind => Keybind != KeyCode.None;
         public bool WaitingForKeybind { get; set; } = false;
-
-        public abstract string GetName();
 
         public static T? Instance<T>() where T : Cheat
         {

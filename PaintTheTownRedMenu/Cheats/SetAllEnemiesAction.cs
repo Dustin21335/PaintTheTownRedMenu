@@ -1,14 +1,17 @@
 ﻿using Il2Cpp;
+using MelonLoader;
 using PaintTheTownRedMenu.Cheats.Core;
+using System.Collections;
 using System.Linq;
 using UnityEngine;
 
 namespace PaintTheTownRedMenu.Cheats
 {
-    public class SetAllEnemiesAction : ExecutableCheat
+    public class SetAllEnemiesAction() : ExecutableCheat("Set All Enemies Action")
     {
         public class Settings
         {
+            public int EnemiesPerFrame = 5;
             public bool Kill = false;
             public bool Explode = true;
             public bool KeepSkeleton = true;
@@ -24,33 +27,50 @@ namespace PaintTheTownRedMenu.Cheats
 
         public Settings SetAllEnemiesActionSettings = new();
 
-        public override string GetName()
-        {
-            return "Set All Enemies Action";
-        }
+        private object? _setAllEnemiesActionsCoroutine;
 
         public override void Execute()
         {
-            Settings settings = SetAllEnemiesActionSettings;
-            foreach (Enemy enemy in GameObjectManager.Enemies.Where(e => e != null).ToList())
+            if (_setAllEnemiesActionsCoroutine != null)
             {
-                if (settings.Explode)
+                MelonCoroutines.Stop(_setAllEnemiesActionsCoroutine);
+                _setAllEnemiesActionsCoroutine = null;
+            }
+            _setAllEnemiesActionsCoroutine = MelonCoroutines.Start(SetAllEnemiesActionRoutine());
+        }
+
+        private IEnumerator SetAllEnemiesActionRoutine()
+        {
+            Settings settings = SetAllEnemiesActionSettings;
+            int count = 0;
+            foreach (Enemy enemy in GameObjectManager.Enemies.Where(e => e != null && !e.IsDead()).ToList())
+            {
+                if (settings is { Kill: false, Explode: false, SetOnFire: false, Poison: false, KeepSkeleton: false, Shockwave: false }) enemy.Kill();
+                else
                 {
-                    if (settings.KeepSkeleton) enemy.ExplodeKeepSkeleton();
+                    if (settings.Explode)
+                    {
+                        if (settings.KeepSkeleton)
+                        {
+                            enemy.ExplodeKeepSkeleton();
+                            if (settings.SetOnFire) enemy.SetOnFire();
+                            if (settings.Poison) enemy.SetPoisoned();
+                        }
+                        else enemy.Explode();
+                    }
                     else
                     {
-                        enemy.Explode();
-                        return;
+                        if (settings.Kill) enemy.Kill();
+                        if (settings.SetOnFire) enemy.SetOnFire();
+                        if (settings.Poison) enemy.SetPoisoned();
+                        if (settings.Knockdown) enemy.Knockdown(Vector3.zero, Vector3.zero);
+                        if (settings.Shockwave) GameObjectManager.LocalPlayer?.Shockwave(settings.MinForce, settings.MaxForce, settings.Range, settings.TargetPlayerIfHit);
                     }
-                    if (settings.SetOnFire) enemy.SetOnFire();
-                    if (settings.Poison) enemy.SetPoisoned();
-                    return;
                 }
-                if (settings.Kill) enemy.Kill();
-                if (settings.SetOnFire) enemy.SetOnFire();
-                if (settings.Poison) enemy.SetPoisoned();
-                if (settings.Knockdown) enemy.Knockdown(Vector3.zero, Vector3.zero);
-                if (settings.Shockwave) GameObjectManager.LocalPlayer?.Shockwave(settings.MinForce, settings.MaxForce, settings.Range, settings.TargetPlayerIfHit);
+                count++;
+                if (count < settings.EnemiesPerFrame) continue;
+                count = 0;
+                yield return null;
             }
         }
     }

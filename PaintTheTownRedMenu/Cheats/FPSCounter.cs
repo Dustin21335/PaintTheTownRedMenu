@@ -1,48 +1,30 @@
-﻿using MelonLoader;
-using PaintTheTownRedMenu.Cheats.Core;
-using System.Collections;
+﻿using PaintTheTownRedMenu.Cheats.Core;
 using UnityEngine;
 
 namespace PaintTheTownRedMenu.Cheats
 {
-    public class FPSCounter : ToggleCheat
+    public class FPSCounter() : ToggleCheat("FPS Counter")
     {
         public int FPS { get; private set; }
-        private object? _fpsCounterCoroutine;
 
-        public override string GetName()
-        {
-            return "FPS Counter";
-        }
+        private int _frameCount;
+        private float _elapsedTime;
 
-        public override void OnEnable()
+        public override void Update()
         {
-            _fpsCounterCoroutine ??= MelonCoroutines.Start(FPSCounterCoroutine());
+            _frameCount++;
+            _elapsedTime += Time.unscaledDeltaTime;
+            if (_elapsedTime < 1f) return;
+            FPS = Mathf.RoundToInt(_frameCount / _elapsedTime);
+            _frameCount = 0;
+            _elapsedTime = 0f;
         }
 
         public override void OnDisable()
         {
-            if (_fpsCounterCoroutine != null) MelonCoroutines.Stop(_fpsCounterCoroutine);
-            _fpsCounterCoroutine = null;
             FPS = 0;
-        }
-
-        private IEnumerator FPSCounterCoroutine()
-        {
-            int frames = 0;
-            float elapsed = 0f;
-            while (true)
-            {
-                frames++;
-                elapsed += Time.unscaledDeltaTime;
-                if (elapsed >= 1f)
-                {
-                    FPS = Mathf.RoundToInt(frames / elapsed);
-                    frames = 0;
-                    elapsed = 0f;
-                }
-                yield return null; 
-            }
+            _frameCount = 0;
+            _elapsedTime = 0f;
         }
     }
 }

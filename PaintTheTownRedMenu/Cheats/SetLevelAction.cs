@@ -4,11 +4,11 @@ using PaintTheTownRedMenu.Cheats.Core;
 
 namespace PaintTheTownRedMenu.Cheats
 {
-    public class SetLevelAction : ExecutableCheat
+    public class SetLevelAction() : ExecutableCheat("Set Level Action")
     {
         public class Settings
         {
-            public LevelAction Action = LevelAction.Win;
+            public LevelAction Action = LevelAction.Restart;
         }
 
         public Settings SetLevelActionSettings = new();
@@ -17,11 +17,6 @@ namespace PaintTheTownRedMenu.Cheats
         {
             Win,
             Restart
-        }
-
-        public override string GetName()
-        {
-            return "Set Level Action";
         }
 
         public override void Execute()

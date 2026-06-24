@@ -26,7 +26,7 @@ namespace PaintTheTownRedMenu.Menu
                             UIUtil.ColorPickerButton("Color", ref espEnemySettings.Color);
                             UIUtil.Checkbox("Show Name", ref espEnemySettings.ShowName);
                             UIUtil.Checkbox("Show Health", ref espEnemySettings.ShowHealth);
-                            UIUtil.Checkbox("Show Type", ref espEnemySettings.ShowType);
+                            UIUtil.Checkbox("Show Boss", ref espEnemySettings.ShowBoss);
                             UIUtil.Checkbox("Show Distance", ref espEnemySettings.ShowDistance);
                         });
                     });

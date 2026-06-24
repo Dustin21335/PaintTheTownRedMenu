@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace PaintTheTownRedMenu.Cheats
 {
-    public class ClickAction : ToggleCheat
+    public class ClickAction() : ToggleCheat("Click Action")
     {
         public class Settings
         {
@@ -27,11 +27,6 @@ namespace PaintTheTownRedMenu.Cheats
         }
 
         public Settings ClickActionSettings = new();
-
-        public override string GetName()
-        {
-            return "Click Action";
-        }
 
         public override void Update()
         {

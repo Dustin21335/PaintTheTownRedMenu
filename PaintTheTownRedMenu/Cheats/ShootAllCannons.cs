@@ -4,12 +4,8 @@ using System.Linq;
 
 namespace PaintTheTownRedMenu.Cheats
 {
-    public class ShootAllCannons : ExecutableCheat
+    public class ShootAllCannons() : ExecutableCheat("Shoot All Cannons")
     {
-        public override string GetName()
-        {
-            return "Shoot All Cannons";
-        }
         public override void Execute()
         {
             foreach (Cannon cannon in GameObjectManager.Cannons.Where(c => c != null).ToList())

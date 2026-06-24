@@ -6,13 +6,13 @@ using UnityEngine;
 namespace PaintTheTownRedMenu.Cheats
 {
     [HarmonyPatch(typeof(PTTRPlayer))]
-    public class HitActions : ToggleCheat
+    public class HitActions() : ToggleCheat("Hit Actions")
     {
         public class Settings
         {
-            public bool Kill = false;
-            public bool Explode = true;
-            public bool KeepSkeleton = true;
+            public bool Kill = true;
+            public bool Explode = false;
+            public bool KeepSkeleton = false;
             public bool SetOnFire = true; 
             public bool Poison = true; 
             public bool Knockdown = false;
@@ -24,11 +24,6 @@ namespace PaintTheTownRedMenu.Cheats
         }
 
         public Settings HitActionSettings = new();
-
-        public override string GetName()
-        {
-            return "Hit Action";
-        }
 
         [HarmonyPatch(nameof(PTTRPlayer.PlayerHitItemEvaluation)), HarmonyPrefix]
         public static void PlayerHitItemEvaluation(Enemy enemy)

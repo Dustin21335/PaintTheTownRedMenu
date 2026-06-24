@@ -2,11 +2,12 @@
 using ImGuiNET;
 using System;
 using System.Linq;
+using System.Text.RegularExpressions;
 using UnityEngine;
+using Color = System.Drawing.Color;
 using Il2CppSystemType = Il2CppSystem.Type;
 using Il2CppType = Il2CppInterop.Runtime.Il2CppType;
 using Type = System.Type;
-using Color = System.Drawing.Color;
 using UColor = UnityEngine.Color;
 using UVector2 = UnityEngine.Vector2;
 using UVector3 = UnityEngine.Vector3;
@@ -117,6 +118,35 @@ namespace PaintTheTownRedMenu
             public bool IsMelee()
             {
                 return !weaponBase.IsGun() && !weaponBase.IsShield();
+            }
+
+            public string GetName()
+            {
+                return Regex.Replace(Regex.Replace(Regex.Replace(Regex.Replace(Regex.Replace(weaponBase.name, @"\(\s*\d+\s*\)", ""), @"\(Clone\)", ""), @"\d+", ""), "-", ""), @"(?<=[a-z])(?=[A-Z])", " ").Trim();
+            }
+        }
+
+        extension(Enemy enemy)
+        {
+            public string GetName()
+            {
+                return Regex.Replace(enemy.eAppearance.ToString().Split('_').Last(), @"(?<!^)([A-Z0-9])", " $1");
+            }
+        }
+
+        extension(EnemySettings enemySettings)
+        {
+            public string GetName()
+            {
+                return Regex.Replace(Regex.Replace(enemySettings.name.Replace("Settings", "").Split('_').Last().Replace("-", ""), @"(?<=[a-z0-9])(?=[A-Z])|(?<=\d)(?=[A-Za-z])|(?<=[A-Za-z])(?=\d)", " "), @"\b0+(\d+)\b", "$1").Trim();
+            }
+        }
+
+        extension(WorldButton worldButton)
+        {
+            public string GetName()
+            {
+                return Regex.Replace(Regex.Replace(Regex.Replace(worldButton.name, @"\d+", ""), "_", ""), @"(?<=[a-z])(?=[A-Z])", " ").Trim();
             }
         }
     }

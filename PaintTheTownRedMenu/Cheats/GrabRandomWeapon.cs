@@ -6,29 +6,25 @@ using UnityEngine;
 
 namespace PaintTheTownRedMenu.Cheats
 {
-    public class GrabRandomWeapon : ExecutableCheat
+    public class GrabRandomWeapon() : ExecutableCheat("Grab Random Weapon")
     {
         public class Settings
         {
             public bool Gun = true;
             public bool Melee = true;
             public bool Shield = true;
-            public bool StealHeldWeapons = true;
+            public bool AllowHeldWeapons = true;
         }
 
         public Settings GrabRandomWeaponSettings = new();
 
-        public override string GetName()
-        {
-            return "Grab Random Weapon";
-        }
-
         public override void Execute()
         {
-            List<Weapon> weapons = GameObjectManager.Weapons.Where(w => w != null && w is { hasBroken: false, heldByPlayer: false } && (!w.held || GrabRandomWeaponSettings.StealHeldWeapons) && (GrabRandomWeaponSettings is { Gun: false, Melee: false, Shield: false } || (GrabRandomWeaponSettings.Gun && w.IsGunWeapon()) || (GrabRandomWeaponSettings.Melee && w.IsMelee()) || (GrabRandomWeaponSettings.Shield && w.IsShield()))).ToList();
+            Settings settings = GrabRandomWeaponSettings;
+            List<Weapon> weapons = GameObjectManager.Weapons.Where(w => w != null && w is { hasBroken: false, heldByPlayer: false } && (!w.held || settings.AllowHeldWeapons) && (settings is { Gun: false, Melee: false, Shield: false } || (settings.Gun && w.IsGunWeapon()) || (settings.Melee && w.IsMelee()) || (settings.Shield && w.IsShield()))).ToList();
             if (weapons.Count == 0) return;
             Weapon weapon = weapons[Random.Range(0, weapons.Count)];
-            if (GrabRandomWeaponSettings.StealHeldWeapons && weapon.held)
+            if (settings.AllowHeldWeapons && weapon.held)
             {
                 Enemy? enemy = GameObjectManager.Enemies.FirstOrDefault(e => weapon.IsShield() ? e.shield == weapon : e.weapon == weapon); 
                 if (enemy != null)

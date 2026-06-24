@@ -1,6 +1,8 @@
 ﻿using MelonLoader;
 using PaintTheTownRedMenu;
+using PaintTheTownRedMenu.Cheats;
 using PaintTheTownRedMenu.Cheats.Core;
+using SharpGUI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +11,7 @@ using UnityEngine;
 using Assembly = System.Reflection.Assembly;
 using Renderer = PaintTheTownRedMenu.Menu.Core.Renderer;
 
-[assembly: MelonInfo(typeof(PaintTheTownRedMenuMod), "Paint The Town Red Menu", "1.0.0", "Dustin")]
+[assembly: MelonInfo(typeof(PaintTheTownRedMenuMod), "Paint The Town Red Menu", "1.0.1", "Dustin")]
 [assembly: MelonGame("South East Games", "Paint The Town Red")]
 
 namespace PaintTheTownRedMenu
@@ -23,13 +25,15 @@ namespace PaintTheTownRedMenu
         public List<ToggleCheat> ToggleCheats { get; } = [];
         public List<ExecutableCheat> ExecutableCheats { get; } = [];
 
-        // todo enemy spawner and item spawner
-        // todo patch manager
-
         public override void OnInitializeMelon()
         {
             Instance = this;
             Renderer = new Renderer();
+        }
+
+        public override void OnApplicationQuit()
+        { 
+            GUI.Shutdown();
         }
 
         public void Initialize()
@@ -42,7 +46,7 @@ namespace PaintTheTownRedMenu
                     continue;
                 }
                 Cheats.Add(cheat);
-                string name = cheat.GetName();
+                string name = cheat.Name;
                 bool log = !cheat.Hidden;
                 switch (cheat)
                 {
@@ -87,6 +91,12 @@ namespace PaintTheTownRedMenu
                         break;
                 }
             }
+        }
+
+        public override void OnSceneWasLoaded(int buildIndex, string sceneName)
+        {
+            if (Cheat.Instance<DebugMode>() is { Enabled: true }) MelonLogger.Msg($"Scene changed to '{sceneName}'");
+            ToggleCheats.ForEach(tc => tc.OnSceneChanged(sceneName));
         }
     }
 }

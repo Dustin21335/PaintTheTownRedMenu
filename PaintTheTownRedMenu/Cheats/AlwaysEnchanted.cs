@@ -5,7 +5,7 @@ using PaintTheTownRedMenu.Cheats.Core;
 namespace PaintTheTownRedMenu.Cheats
 {
     [HarmonyPatch(typeof(WeaponAttack))]
-    public class AlwaysEnchanted : ToggleCheat
+    public class AlwaysEnchanted() : ToggleCheat("Always Enchanted")
     {
         public class Settings
         {
@@ -14,11 +14,6 @@ namespace PaintTheTownRedMenu.Cheats
         }
 
         public Settings AlwaysEnchantedSettings = new();
-
-        public override string GetName()
-        {
-            return "Always Enchanted";
-        }
 
         public override void Update()
         {

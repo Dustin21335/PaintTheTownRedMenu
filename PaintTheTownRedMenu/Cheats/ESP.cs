@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace PaintTheTownRedMenu.Cheats
 {
-    public class ESP : ToggleCheat
+    public class ESP() : ToggleCheat("ESP")
     {
         public class ESPDisplaySettings
         {
@@ -22,11 +22,11 @@ namespace PaintTheTownRedMenu.Cheats
         public class EnemySettings : ESPDisplaySettings
         {
             public bool ShowHealth = true;
-            public bool ShowType = true;
+            public bool ShowBoss = true;
 
             public EnemySettings()
             {
-                Color = Color.red;
+                Color = new Color(1f, 0.478f, 0f, 1f);
             }
         }
 
@@ -37,11 +37,11 @@ namespace PaintTheTownRedMenu.Cheats
             public bool Shields = true;
             public bool IgnoreHeld = true;
             public bool ShowHeld = false;
-            public bool ShowType = true;
+            public bool ShowType = false;
 
             public WeaponSettings()
             {
-                Color = Color.green;
+                Color = new Color(0.30f, 0.60f, 0.95f, 1f);
             }
         }
 
@@ -53,7 +53,7 @@ namespace PaintTheTownRedMenu.Cheats
             public ButtonSettings()
             {
                 Enabled = false;
-                Color = Color.magenta;
+                Color = new Color(0.35f, 0.85f, 0.45f, 1f);
             }
         }
 
@@ -66,11 +66,6 @@ namespace PaintTheTownRedMenu.Cheats
         }
 
         public Settings ESPSettings = new();
-
-        public override string GetName()
-        {
-            return "ESP";
-        }
 
         public override void OnGUI()
         {
@@ -89,9 +84,9 @@ namespace PaintTheTownRedMenu.Cheats
                 DrawESP(enemy, ESPEnemySettings.Color, (screen, color, distance) =>
                 {
                     float offset = 0f;
-                    if (ESPEnemySettings.ShowName) DrawText("Enemy", color, screen, ref offset);
+                    if (ESPEnemySettings.ShowName) DrawText(enemy.GetName(), color, screen, ref offset);
                     if (ESPEnemySettings.ShowHealth) DrawText($"[HP {enemy.health * 100f:F0}]", color, screen, ref offset);
-                    if (ESPEnemySettings.ShowType) DrawText($"[{Regex.Replace(enemy.thisEnemyType.ToString(), "(\\B[A-Z])", " $1")}]", color, screen, ref offset);
+                    if (ESPEnemySettings.ShowBoss && !enemy.canBeKnockedDown) DrawText("[Boss]", color,screen, ref offset);
                     if (ESPEnemySettings.ShowDistance) DrawText($"[{distance:F2}m]", color, screen, ref offset);
                 });
             }
@@ -106,7 +101,7 @@ namespace PaintTheTownRedMenu.Cheats
                 DrawESP(weapon, ESPWeaponSettings.Color, (screen, color, distance) => 
                 {
                     float offset = 0f;
-                    if (ESPWeaponSettings.ShowName) DrawText(Regex.Replace(Regex.Replace(Regex.Replace(Regex.Replace(weapon.name, @"\s*\(Clone\)\s*", ""), @"\s*\(?\s*\d+\s*\)?\s*$", ""), @"(_|(?<!^)(?=[A-Z]))", " "), @"\s{2,}", " ").Trim(), color, screen, ref offset);
+                    if (ESPWeaponSettings.ShowName) DrawText(weapon.GetName(), color, screen, ref offset);
                     if (ESPWeaponSettings.ShowType) DrawText($"[{(weapon.IsGunWeapon() ? "Gun" : weapon.IsShield() ? "Shield" : weapon.IsMelee() ? "Melee" : "Weapon")}]", color, screen, ref offset);
                     if (ESPWeaponSettings.ShowHeld) DrawText($"[{(weapon.held ? "Held" : "Unheld")}]", color, screen, ref offset);
                     if (ESPWeaponSettings.ShowDistance) DrawText($"[{distance:F2}m]", color, screen, ref offset);
@@ -123,7 +118,7 @@ namespace PaintTheTownRedMenu.Cheats
                 DrawESP(button, ESPButtonSettings.Color, (screen, color, distance) =>
                 {
                     float offset = 0f;
-                    if (ESPButtonSettings.ShowName) DrawText(Regex.Replace(Regex.Replace(Regex.Replace(Regex.Replace(button.name, @"\s*\(Clone\)\s*", ""), @"(_\d+|\d+)$", ""), @"(_|(?<!^)(?=[A-Z]))", " "), @"\s{2,}", " ").Trim(), color, screen, ref offset); 
+                    if (ESPButtonSettings.ShowName) DrawText(button.GetName(), color, screen, ref offset); 
                     if (ESPButtonSettings.ShowPressedState) DrawText($"[{(button.pressed ? "Pressed" : "Unpressed")}]", color, screen, ref offset);
                     if (ESPButtonSettings.ShowDistance) DrawText($"[{distance:F2}m]", color, screen, ref offset);
                 });

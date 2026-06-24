@@ -2,7 +2,7 @@
 
 namespace PaintTheTownRedMenu.Cheats.Core
 {
-    public abstract class ToggleCheat(KeyCode keybind = KeyCode.None, bool hidden = false) : Cheat(keybind, hidden)
+    public abstract class ToggleCheat(string name, KeyCode keybind = KeyCode.None, bool hidden = false) : Cheat(name, keybind, hidden)
     {
         public bool Enabled
         {
@@ -17,6 +17,7 @@ namespace PaintTheTownRedMenu.Cheats.Core
             }
         } = false;
 
+        public virtual void OnSceneChanged(string sceneName) { }
         public virtual void OnStateChanged(bool state) { }
         public virtual void OnEnable() { }
         public virtual void OnDisable() { }

@@ -6,7 +6,7 @@ using PaintTheTownRedMenu.Cheats.Core;
 namespace PaintTheTownRedMenu.Cheats
 {
     [HarmonyPatch(typeof(PTTRPlayer))]
-    public class UnlockAllPowers : ToggleCheat
+    public class UnlockAllPowers() : ToggleCheat("Unlock All Powers")
     {
         public class Settings
         {
@@ -16,11 +16,6 @@ namespace PaintTheTownRedMenu.Cheats
         }
 
         public Settings UnlockAllPowersSettings = new();
-
-        public override string GetName()
-        {
-            return "Unlock All Powers";
-        }
 
         [HarmonyPatch(nameof(PTTRPlayer.CanDoPower)), HarmonyPrefix]
         public static bool CanDoPower(int powerIndex, ref bool __result)

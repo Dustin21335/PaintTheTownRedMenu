@@ -4,7 +4,7 @@ using PaintTheTownRedMenu.Cheats.Core;
 
 namespace PaintTheTownRedMenu.Cheats
 {
-    public class SetEnchant : ExecutableCheat
+    public class SetEnchant() : ExecutableCheat("Set Enchant")
     {
         public class Settings
         {
@@ -19,11 +19,6 @@ namespace PaintTheTownRedMenu.Cheats
         {
             Enchant,
             Unenchant
-        }
-
-        public override string GetName()
-        {
-            return "Set Enchant";
         }
 
         public override void Execute()

@@ -4,13 +4,8 @@ using UnityEngine;
 
 namespace PaintTheTownRedMenu.Cheats
 {
-    public class NoClip() : ToggleCheat(KeyCode.Delete)
+    public class NoClip() : ToggleCheat("No Clip", KeyCode.Delete)
     {
-        public override string GetName()
-        {
-            return "No Clip";
-        }
-
         public override void OnStateChanged(bool state)
         {
             DebugManager.FreeCam = state;

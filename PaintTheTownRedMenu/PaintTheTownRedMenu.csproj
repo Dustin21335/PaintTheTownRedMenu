@@ -28,6 +28,10 @@
 			<HintPath>Resources\BaseGame\Assembly-CSharp.dll</HintPath>
 			<Private>False</Private>
 		</Reference>
+		<Reference Include="Il2Cppcom.rlabrecque.steamworks.net">
+		  <HintPath>Resources\BaseGame\Il2Cppcom.rlabrecque.steamworks.net.dll</HintPath>
+		  <Private>False</Private>
+		</Reference>
 		<Reference Include="Il2CppInterop.Runtime">
 			<HintPath>Resources\MelonLoader\Il2CppInterop.Runtime.dll</HintPath>
 			<Private>False</Private>
@@ -52,12 +56,12 @@
 			<HintPath>Resources\SharpGUI.dll</HintPath>
 			<Private>False</Private>
 		</Reference>
-		<Reference Include="UnityEngine">
-			<HintPath>Resources\BaseGame\UnityEngine.dll</HintPath>
+		<Reference Include="Unity.Addressables">
+			<HintPath>Resources\BaseGame\Unity.Addressables.dll</HintPath>
 			<Private>False</Private>
 		</Reference>
-		<Reference Include="UnityEngine.AnimationModule">
-			<HintPath>Resources\BaseGame\UnityEngine.AnimationModule.dll</HintPath>
+		<Reference Include="UnityEngine">
+			<HintPath>Resources\BaseGame\UnityEngine.dll</HintPath>
 			<Private>False</Private>
 		</Reference>
 		<Reference Include="UnityEngine.CoreModule">
@@ -70,10 +74,6 @@
 		</Reference>
 		<Reference Include="UnityEngine.PhysicsModule">
 			<HintPath>Resources\BaseGame\UnityEngine.PhysicsModule.dll</HintPath>
-			<Private>False</Private>
-		</Reference>
-		<Reference Include="UnityEngine.UI">
-			<HintPath>Resources\BaseGame\UnityEngine.UI.dll</HintPath>
 			<Private>False</Private>
 		</Reference>
 	</ItemGroup>

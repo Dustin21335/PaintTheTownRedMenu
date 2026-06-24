@@ -11,8 +11,8 @@ namespace PaintTheTownRedMenu
 {
     public static class Settings
     {
-        private static readonly string SettingsFile = "Settings.json";
-        public static string DefaultSettingsFile = "Default.Settings.json";
+        private const string SettingsFile = "Settings.json";
+        private const string DefaultSettingsFile = "Default.Settings.json";
 
         public static bool SettingsFileExists()
         {

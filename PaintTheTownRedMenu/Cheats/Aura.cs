@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace PaintTheTownRedMenu.Cheats
 {
-    public class Aura : ToggleCheat
+    public class Aura() : ToggleCheat("Aura")
     {
         public class Settings
         {
@@ -24,11 +24,6 @@ namespace PaintTheTownRedMenu.Cheats
         }
 
         public Settings AuraSettings = new();
-
-        public override string GetName()
-        {
-            return "Aura";
-        }
 
         public override void Update()
         {

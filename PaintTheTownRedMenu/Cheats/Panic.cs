@@ -5,13 +5,8 @@ using UnityEngine;
 
 namespace PaintTheTownRedMenu.Cheats
 {
-    public class Panic() : ToggleCheat(KeyCode.Pause)
+    public class Panic() : ToggleCheat("Panic", KeyCode.Pause)
     {
-        public override string GetName()
-        {
-            return "Panic";
-        }
-
         private readonly HashSet<ToggleCheat> _previouslyEnabledCheats = [];
 
         public override void OnEnable()

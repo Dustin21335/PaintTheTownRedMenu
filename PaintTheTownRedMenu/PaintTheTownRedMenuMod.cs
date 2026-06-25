@@ -2,16 +2,16 @@
 using PaintTheTownRedMenu;
 using PaintTheTownRedMenu.Cheats;
 using PaintTheTownRedMenu.Cheats.Core;
-using SharpGUI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using UnityEngine;
 using Assembly = System.Reflection.Assembly;
+using GUI = SharpGUI.GUI;
 using Renderer = PaintTheTownRedMenu.Menu.Core.Renderer;
 
-[assembly: MelonInfo(typeof(PaintTheTownRedMenuMod), "Paint The Town Red Menu", "1.0.1", "Dustin")]
+[assembly: MelonInfo(typeof(PaintTheTownRedMenuMod), "Paint The Town Red Menu", "1.0.2", "Dustin")]
 [assembly: MelonGame("South East Games", "Paint The Town Red")]
 
 namespace PaintTheTownRedMenu

@@ -1,10 +1,13 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using MelonLoader;
+using Newtonsoft.Json.Linq;
 using PaintTheTownRedMenu.Cheats.Core;
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using UnityEngine;
 
 namespace PaintTheTownRedMenu
@@ -16,7 +19,17 @@ namespace PaintTheTownRedMenu
 
         public static bool SettingsFileExists()
         {
-            return File.Exists(SettingsFile);
+            return SettingsFileExists(SettingsFile);
+        }       
+        
+        public static bool DefaultSettingsFileExists()
+        {
+            return SettingsFileExists(DefaultSettingsFile);
+        }    
+        
+        public static bool SettingsFileExists(string file)
+        {
+            return File.Exists(SettingsFile) && new FileInfo(SettingsFile).Length > 0;
         }
 
         public static void SaveSettings()
@@ -117,7 +130,7 @@ namespace PaintTheTownRedMenu
 
         public static void ResetSettings()
         {
-            if (!File.Exists(DefaultSettingsFile)) return;
+            if (!DefaultSettingsFileExists()) return;
             File.Copy(DefaultSettingsFile, SettingsFile, true);
             LoadSettings();
         }
@@ -156,6 +169,34 @@ namespace PaintTheTownRedMenu
                 field.SetValue(obj, value);
             }
             return obj;
+        }
+
+        public static void CopyConfigCode()
+        {
+            SaveSettings();
+            byte[] jsonBytes = Encoding.UTF8.GetBytes(File.ReadAllText(SettingsFile));
+            using MemoryStream compressedStream = new MemoryStream();
+            using (GZipStream gzipStream = new GZipStream(compressedStream, CompressionLevel.SmallestSize)) gzipStream.Write(jsonBytes, 0, jsonBytes.Length);
+            GUIUtility.systemCopyBuffer = Convert.ToBase64String(compressedStream.ToArray());
+        }
+
+        public static void LoadConfigCode(string code)
+        {
+            if (string.IsNullOrWhiteSpace(code)) return;
+            try
+            {
+                using MemoryStream inputStream = new MemoryStream(Convert.FromBase64String(code));
+                using GZipStream decompressionStream = new GZipStream(inputStream, CompressionMode.Decompress);
+                using MemoryStream outputStream = new MemoryStream();
+                decompressionStream.CopyTo(outputStream);
+                File.WriteAllText(SettingsFile, Encoding.UTF8.GetString(outputStream.ToArray()));
+                LoadSettings();
+                SaveSettings();
+            }
+            catch (Exception ex)
+            {
+                MelonLogger.Error("Config code", ex);
+            }
         }
     }
 }

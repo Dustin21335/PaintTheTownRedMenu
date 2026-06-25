@@ -68,6 +68,10 @@
 			<HintPath>Resources\BaseGame\UnityEngine.CoreModule.dll</HintPath>
 			<Private>False</Private>
 		</Reference>
+		<Reference Include="UnityEngine.IMGUIModule">
+			<HintPath>Resources\BaseGame\UnityEngine.IMGUIModule.dll</HintPath>
+			<Private>False</Private>
+		</Reference>
 		<Reference Include="UnityEngine.InputLegacyModule">
 			<HintPath>Resources\BaseGame\UnityEngine.InputLegacyModule.dll</HintPath>
 			<Private>False</Private>

@@ -160,13 +160,13 @@ namespace PaintTheTownRedMenu
             if (type.IsPrimitive || type.IsEnum || type == typeof(string) || type == typeof(float) || type == typeof(double) || type == typeof(int) || type == typeof(bool)) return token.ToObject(type);
             object? obj = Activator.CreateInstance(type);
             if (obj == null) return null;
-            foreach (FieldInfo field in type.GetFields(BindingFlags.Public | BindingFlags.Instance))
+            foreach (FieldInfo fieldInfo in type.GetFields(BindingFlags.Public | BindingFlags.Instance))
             {
-                JToken? child = token[field.Name];
+                JToken? child = token[fieldInfo.Name];
                 if (child == null) continue;
-                object? value = DeserializeObject(child, field.FieldType);
+                object? value = DeserializeObject(child, fieldInfo.FieldType);
                 if (value == null) continue;
-                field.SetValue(obj, value);
+                fieldInfo.SetValue(obj, value);
             }
             return obj;
         }

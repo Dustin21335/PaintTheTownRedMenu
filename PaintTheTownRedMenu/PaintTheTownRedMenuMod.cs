@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using UnityEngine;
 using Assembly = System.Reflection.Assembly;
 using GUI = SharpGUI.GUI;
@@ -27,6 +28,15 @@ namespace PaintTheTownRedMenu
 
         public override void OnInitializeMelon()
         {
+            AppDomain.CurrentDomain.UnhandledException += (s, e) =>
+            {
+                MelonLogger.Error(e.ExceptionObject);
+            };
+            TaskScheduler.UnobservedTaskException += (s, e) =>
+            {
+                MelonLogger.Error(e.Exception);
+                e.SetObserved();
+            };
             Instance = this;
             Renderer = new Renderer();
         }
